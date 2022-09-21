@@ -1,12 +1,14 @@
 # DockerCommand
 
-Check docker version
+### Common Command
 ```
 docker version
 ```
 
-Build docker image
+### Docker Image
+
 ```
+# Build docker image
 docker build -t hello-docker .
 
 # -t  => tag
@@ -14,7 +16,6 @@ docker build -t hello-docker .
 # . => current dic of docker file.
 ```
 
-Docker image CLI 
 ```
 # list image
 docker image ls
