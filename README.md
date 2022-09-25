@@ -95,8 +95,8 @@ docker network inspect NAME_NETWORK
 docker network inspect bridge
 ```
 
+![](https://github.com/neutrofoton/DockerCommand/blob/master/images/ss_network_bridge_inspect.png?raw=true)
 
-![](images/ss_network_bridge_inspect.png?raw=true)
 
 ```
 # inspect docker container
