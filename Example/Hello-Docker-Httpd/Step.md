@@ -10,11 +10,11 @@
     docker image ls
 
     # check history (optional)
-    docker image history hello-docker-httpd
+    docker image history hello-docker-httpd:1.0.0
     ```
 
 3. Starting the web server
 
     ```
-    docker run -d -p 8080:80 hello-docker-httpd
+    docker run -d -p 8080:80 hello-docker-httpd:1.0.0
     ```
