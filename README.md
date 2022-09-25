@@ -27,6 +27,10 @@ docker pull httpd
 
 # remove docker image
 docker image rm XXXXX
+
+# Showing docker image history
+docker image history IMAGE_NAME
+docker image history IMAGE_NAME:TAG
 ```
 
 ## Pull Docker Image
@@ -36,6 +40,7 @@ docker pull IMAGE_NAME:TAG
 # ex:
 docker pull codewithmosh/hello-docker # deafult will pull latest tag
 docker pull ubuntu
+
 ```
 
 # Docker Container
