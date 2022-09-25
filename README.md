@@ -95,8 +95,9 @@ docker network inspect NAME_NETWORK
 docker network inspect bridge
 ```
 
-![](https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_network_bridge_inspect.png?raw=true)
 
+
+<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_network_bridge_inspect.PNG" alt="drawing" width="75%"/>
 
 ```
 # inspect docker container
@@ -149,4 +150,6 @@ docker network connect net-custom node1
 # Disconnecting container to specific network
 docker network disconnect NETWORK_NAME CONTAINER_NAME
 ```
-<img src="images/ss_network_custom_connect.png" alt="drawing" width="75%"/>
+
+
+<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_network_custom_connect.PNG" alt="drawing" width="75%"/>
