@@ -1,11 +1,10 @@
-# DockerCommand
 
-## Common Command
+# Common Command
 ```
 docker version
 ```
 
-## Docker Image
+# Docker Image
 
 ```
 # Build docker image
@@ -20,11 +19,26 @@ docker build -t hello-docker .
 # list image
 docker image ls
 
+# docker pull
+docker pull IMAGE_NAME
+
+#ex: pull apache web server
+docker pull httpd
+
 # remove docker image
 docker image rm XXXXX
 ```
 
-## Docker Container
+## Pull Docker Image
+```
+docker pull IMAGE_NAME:TAG
+
+# ex:
+docker pull codewithmosh/hello-docker # deafult will pull latest tag
+docker pull ubuntu
+```
+
+# Docker Container
 ```
 # run docker image
 docker run IMAGE_NAME_or_ID
@@ -66,23 +80,16 @@ docker stop node1 node2
 docker rm node1
 ```
 
-## Pull Docker Image
-```
-docker pull IMAGE_NAME:TAG
 
-# ex:
-docker pull codewithmosh/hello-docker # deafult will pull latest tag
-docker pull ubuntu
-```
 
-## Docker process
+# Docker Process
 ```
 # show proses that running
 docker ps
 docker ps -a
 ```
 
-## Docker Network
+# Docker Network
 ```
 # Showing network driver installed once we installed and run docker
 docker network ls
@@ -131,7 +138,7 @@ docker network prune
 ```
 
 
-### Ping Between Containers
+## Ping Between Containers
 
 ```
 # Ping from container node1 (172.17.0.2) to node2 (172.17.0.3)
@@ -139,7 +146,7 @@ docker exec node1 ping node2
 docker exec node1 ping 172.17.0.3
 ```
 
-### Connecting Existing Container to a Custom Network
+## Connecting Existing Container to a Custom Network
 ```
 # Connecting container to specific network
 docker network connect NETWORK_NAME CONTAINER_NAME
@@ -151,5 +158,26 @@ docker network connect net-custom node1
 docker network disconnect NETWORK_NAME CONTAINER_NAME
 ```
 
-
 <img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_network_custom_connect.PNG" alt="drawing" width="75%"/>
+
+
+# Port Mapping
+
+<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_port_mapping.PNG" alt="drawing" width="75%"/>
+
+```
+docker run -p HOST_PORT:CONTAINER_PORT image
+
+# example: creating and starting httpd web server
+docker run -p 8080:80 httpd
+```
+
+## Changing Port
+```
+# Step:
+# 1. Stop existing container
+# 2. Create a new image from a container’s changes using docker commit
+# 3. Create new container by specifiying the expected port using docker run
+```
+
+<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
