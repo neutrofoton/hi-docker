@@ -95,7 +95,7 @@ docker network inspect NAME_NETWORK
 docker network inspect bridge
 ```
 
-![](https://github.com/neutrofoton/DockerCommand/blob/master/images/ss_network_bridge_inspect.png?raw=true)
+![](https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_network_bridge_inspect.png?raw=true)
 
 
 ```
@@ -110,6 +110,7 @@ docker run -d --name node1 nginx:stable-alpine
 docker inspect node1
 ```
 <img src="images/ss_container_network_id.png" alt="drawing" width="75%"/>
+
 
 ```
 # Creating custom network
