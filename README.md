@@ -1,11 +1,11 @@
 # DockerCommand
 
-### Common Command
+## Common Command
 ```
 docker version
 ```
 
-### Docker Image
+## Docker Image
 
 ```
 # Build docker image
@@ -24,42 +24,125 @@ docker image ls
 docker image rm XXXXX
 ```
 
-### Running Docker
+## Docker Container
 ```
 # run docker image
 docker run IMAGE_NAME_or_ID
 
-## ex:
+# ex:
 docker run hello-docker2
 docker run 36382b85ef7b
 
 # docker run also will run and download from docker hub if the image locally not exist.
-## ex:
+# ex:
 docker run ubuntu
 
 # run docker image interactivelly
 docker run -it IMAGE_NAME # -it means interactively
 
-## ex:
+# ex:
 docker run -it ubuntu
 
-### we may get error if using Git Bash: the input device is not a TTY.  If you are using mintty, try prefixing the command with 'winpty'. Then use the following command:
+# we may get error if using Git Bash: the input device is not a TTY.  
+# If you are using mintty, try prefixing the command with 'winpty'. Then use the following command:
 
 winpty docker run -it ubuntu
+
+# Run(create and start) docker as daemon with name
+docker run -d --name node1 nginx:stable-alpine
+docker run -d --name node2 nginx:stable-alpine
+
+# Run (create and start) docker as daemon with name and specific network
+docker run -d --name node1 --network net-custom nginx:stable-alpine
+docker run -d --name node2 --network net-custom nginx:stable-alpine
+
+# Starting docker container
+docker start node1 node2
+
+# Stopping docker daemon
+docker stop node1 node2
+
+# Removing/Deleting container
+docker rm node1
 ```
 
-### Pull Docker Image
+## Pull Docker Image
 ```
 docker pull IMAGE_NAME:TAG
 
-## ex:
-docker pull codewithmosh/hello-docker # deafult will pull *latest* tag
+# ex:
+docker pull codewithmosh/hello-docker # deafult will pull latest tag
 docker pull ubuntu
 ```
 
-### Docker process
+## Docker process
 ```
 # show proses that running
 docker ps
 docker ps -a
 ```
+
+## Docker Network
+```
+# Showing network driver installed once we installed and run docker
+docker network ls
+
+# Inspect network driver. 
+# It shows detail info of the network including the containers that use the network driver.
+docker network inspect NAME_NETWORK
+
+# ex:
+docker network inspect bridge
+```
+<img src="images/ss_network_bridge_inspect.png" alt="drawing" width="75%"/>
+
+
+
+```
+# inspect docker container
+docker inspect CONTAINER_NAME
+
+#ex:
+# we have docker running
+docker run -d --name node1 nginx:stable-alpine
+
+# inspect docker container
+docker inspect node1
+```
+<img src="images/ss_container_network_id.png" alt="drawing" width="75%"/>
+
+```
+# Creating custom network
+docker network create NETWORK_NAME
+
+#ex:
+docker network create net-custom
+
+# check the created network by:
+docker network ls
+
+# Removing custom network
+docker network rm NETWORK_NAME
+
+# Removing unused network
+docker network prune
+```
+
+
+### Ping Between Containers
+
+```
+# Ping from container node1 (172.17.0.2) to node2 (172.17.0.3)
+docker exec node1 ping node2
+docker exec node1 ping 172.17.0.3
+```
+
+### Connecting Existing Container to a Custom Network
+```
+# Connecting container to specific network
+docker network connect NETWORK_NAME CONTAINER_NAME
+
+#ex:
+docker network connect net-custom node1
+```
+<img src="images/ss_network_custom_connect.png" alt="drawing" width="75%"/>
