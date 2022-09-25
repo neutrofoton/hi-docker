@@ -109,7 +109,7 @@ docker run -d --name node1 nginx:stable-alpine
 # inspect docker container
 docker inspect node1
 ```
-<img src="images/ss_container_network_id.png" alt="drawing" width="75%"/>
+<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_container_network_id.PNG" alt="drawing" width="75%"/>
 
 
 ```
