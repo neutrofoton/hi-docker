@@ -94,9 +94,9 @@ docker network inspect NAME_NETWORK
 # ex:
 docker network inspect bridge
 ```
-<img src="images/ss_network_bridge_inspect.png" alt="drawing" width="75%"/>
 
 
+![](images/ss_network_bridge_inspect.png?raw=true)
 
 ```
 # inspect docker container
@@ -144,5 +144,8 @@ docker network connect NETWORK_NAME CONTAINER_NAME
 
 #ex:
 docker network connect net-custom node1
+
+# Disconnecting container to specific network
+docker network disconnect NETWORK_NAME CONTAINER_NAME
 ```
 <img src="images/ss_network_custom_connect.png" alt="drawing" width="75%"/>
