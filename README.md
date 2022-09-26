@@ -1,5 +1,5 @@
 
-# Common Command
+# About Docker
 ```
 docker version
 ```
@@ -109,7 +109,7 @@ docker network inspect bridge
 
 
 
-<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_network_bridge_inspect.PNG" alt="drawing" width="75%"/>
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_network_bridge_inspect.PNG" alt="drawing" width="75%"/>
 
 ```
 # inspect docker container
@@ -122,7 +122,7 @@ docker run -d --name node1 nginx:stable-alpine
 # inspect docker container
 docker inspect node1
 ```
-<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_container_network_id.PNG" alt="drawing" width="75%"/>
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_container_network_id.PNG" alt="drawing" width="75%"/>
 
 
 ```
@@ -163,12 +163,12 @@ docker network connect net-custom node1
 docker network disconnect NETWORK_NAME CONTAINER_NAME
 ```
 
-<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_network_custom_connect.PNG" alt="drawing" width="75%"/>
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_network_custom_connect.PNG" alt="drawing" width="75%"/>
 
 
 # Port Mapping
 
-<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_port_mapping.PNG" alt="drawing" width="75%"/>
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping.PNG" alt="drawing" width="75%"/>
 
 ```
 docker run -p HOST_PORT:CONTAINER_PORT image
@@ -185,4 +185,4 @@ docker run -p 8080:80 httpd
 # 3. Create new container by specifiying the expected port using docker run
 ```
 
-<img src="https://github.com/neutrofoton/DockerCommand/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
