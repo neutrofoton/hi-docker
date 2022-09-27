@@ -186,3 +186,22 @@ docker run -p 8080:80 httpd
 ```
 
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
+
+
+# Docker Compose
+
+```
+# running docker compose
+docker-compose up
+
+# starting docker compose in background
+docker-compose up -d
+
+# showing process
+docker-compose ps
+
+# stopping docker compose
+docker-compose stop
+```
+
+
