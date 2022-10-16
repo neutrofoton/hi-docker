@@ -1,10 +1,28 @@
 
 # About Docker
 ```
+# show docker version
 docker version
+
+# show detail docker engine (configuration, images, containers etc)
+docker info
+
+
+# old docker command format is: docker <COMMAND> (options)
+# new docker command format is: docker <COMMAND> <SUB_COMMAND> (options)
+# example: 
+# OLD: docker run
+# NEW: docker container run 
+
+# show list command 
+docker
 ```
 
 # Docker Image
+> - An ***image*** is the application (binaries, libraries and source code) we want to run.
+> - New Command Format is <br/>
+    ``` docker image <SUB_COMMAND> (options)```
+
 
 ```
 # Build docker image
@@ -33,7 +51,7 @@ docker image history IMAGE_NAME
 docker image history IMAGE_NAME:TAG
 ```
 
-## Pull Docker Image
+### Pull Docker Image
 ```
 docker pull IMAGE_NAME:TAG
 
@@ -44,6 +62,16 @@ docker pull ubuntu
 ```
 
 # Docker Container
+> - A ***container*** is an instance of the docker image running as a process
+> - We can have many containers running of the same image
+> - New Command Format is <br/>
+    ``` docker container <SUB_COMMAND> (options)```
+
+### Command Format
+```
+docker container <SUB_COMMAND> (options)
+```
+
 ```
 # run docker image
 docker run IMAGE_NAME_or_ID
