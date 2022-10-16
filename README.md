@@ -140,8 +140,8 @@ We can use any port on the left, like <code>8080:80</code> or <code>8888:80</cod
 
 **Step of Changing Port Mapping:**
 1. Stop existing container
-2. Create a new image from a container’s changes using ***docker commit*** or ***docker container commit***
-3. Create new container by specifiying the expected port using ***docker container run***
+2. Create a new image from a container’s changes using ***<code>docker commit</code>*** or ***<code>docker container commit</code>***
+3. Create new container by specifiying the expected port using ***<code>docker container run</code>***
 
 
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
