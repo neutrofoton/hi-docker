@@ -122,22 +122,20 @@ docker container rm node1
 
 <br/>
 
-> - Format Command <br/>
-    ``` 
-    docker container run -p HOST_PORT:CONTAINER_PORT image
-    ``` <br/>
-    ``` 
-    docker container run -publish HOST_PORT:CONTAINER_PORT image
-    ```
-
 ```
+docker container run -p HOST_PORT:CONTAINER_PORT image
+docker container run -publish HOST_PORT:CONTAINER_PORT image
+
 # example: creating and starting httpd web server
 docker container run -p 8080:80 httpd
 ```
-> **Step of Changing Port Mapping:**
-> 1. Stop existing container
-> 2. Create a new image from a container’s changes using ***docker commit*** or ***docker container commit***
-> 3. Create new container by specifiying the expected port using ***docker container run***
+
+<br/>
+
+**Step of Changing Port Mapping:**
+1. Stop existing container
+2. Create a new image from a container’s changes using ***docker commit*** or ***docker container commit***
+3. Create new container by specifiying the expected port using ***docker container run***
 
 
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
@@ -192,11 +190,11 @@ docker network inspect bridge
 
 
 ### Docker Network - Custom Network
-> - command of ***Creating Custom Network***<br/>
-    ```docker network create NETWORK_NAME
-    ```
 
 ```
+# creating custom network
+docker network create NETWORK_NAME
+
 #ex:
 docker network create net-custom
 
@@ -210,12 +208,11 @@ docker network rm NETWORK_NAME
 docker network prune
 ```
 
-### Docker Network - Connecting Existing Container to a Custom Network
-> - command of ***Connecting container to specific network***<br/>
-    ```docker network connect NETWORK_NAME CONTAINER_NAME
-    ```
-
+### Docker Network - Connecting/Disconnecting Existing Container to a Custom Network
 ```
+# Connecting container to specific network
+docker network connect NETWORK_NAME CONTAINER_NAME
+
 #ex:
 docker network connect net-custom node1
 
