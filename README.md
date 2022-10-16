@@ -21,13 +21,16 @@ docker
 # Docker Image
 > - An ***image*** is the application (binaries, libraries and source code) we want to run.
 > - Docker's default image "registry" is called Docker Hub (hub.docker.com)
+> - Show list of sub command of ***image***<br/>
+    ``` docker image
+    ```
 > - New Command Format is <br/>
     ``` docker image <SUB_COMMAND> (options)```
 
 
 ```
-# Build docker image
-docker build -t hello-docker .
+# Build docker image from a docker file
+docker image build -t hello-docker .
 
 # -t  => tag
 # hello-docker => image name
@@ -39,7 +42,7 @@ docker build -t hello-docker .
 docker image ls
 
 # docker pull
-docker pull IMAGE_NAME
+docker image pull IMAGE_NAME
 
 #ex: pull apache web server
 docker image pull httpd
@@ -63,8 +66,8 @@ docker image pull ubuntu
 ```
 
 # Docker Container
-> - A ***container*** is an instance of the docker image running as a process
-> - We can have many containers running of the same image
+> - A ***container*** is an instance of the docker image which runs as a process
+> - We can have many containers which are running of the same image
 > - Show list of sub command of ***container***<br/>
     ``` docker container
     ```
@@ -81,7 +84,7 @@ docker container run IMAGE_NAME_or_ID
 docker container run hello-docker2
 docker container run 36382b85ef7b
 
-# docker run also will download image (from docker hub if the image locally not exist), create and run a new container.
+# docker run will download image (from docker hub if the image locally not exist), create and run a new container.
 # ex:
 docker container run ubuntu
 
@@ -114,10 +117,10 @@ docker container stop node1 node2
 docker container rm node1
 ```
 
-
 ### Docker Container - Port Mapping, Changing Port
-
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping.PNG" alt="drawing" width="75%"/>
+
+<br/>
 
 > - Format Command <br/>
     ``` 
@@ -131,7 +134,7 @@ docker container rm node1
 # example: creating and starting httpd web server
 docker container run -p 8080:80 httpd
 ```
-> Step:
+> ** Step of Changing Port Mapping:**
 > 1. Stop existing container
 > 2. Create a new image from a container’s changes using ***docker commit*** or ***docker container commit***
 > 3. Create new container by specifiying the expected port using ***docker container run***
@@ -139,12 +142,14 @@ docker container run -p 8080:80 httpd
 
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
 
+<br/>
+
 ### Docker Container -Ping Between Containers
 
 ```
 # Ping from container node1 (172.17.0.2) to node2 (172.17.0.3)
-docker exec node1 ping node2
-docker exec node1 ping 172.17.0.3
+docker container exec node1 ping node2
+docker container exec node1 ping 172.17.0.3
 ```
 
 
