@@ -135,7 +135,7 @@ docker container run -p 8080:80 httpd
 ```
 
 We will get a "bind" error if the left number (host port) is being used by anything else, even another container.
-We can use any port on the left, like 8080:80 or 8888:80, then use localhost:8888 when testing.
+We can use any port on the left, like <code>8080:80</code> or <code>8888:80</code>, then use <code>localhost:8888</code> when testing.
 <br/>
 
 **Step of Changing Port Mapping:**
