@@ -20,6 +20,7 @@ docker
 
 # Docker Image
 > - An ***image*** is the application (binaries, libraries and source code) we want to run.
+> - Docker's default image "registry" is called Docker Hub (hub.docker.com)
 > - New Command Format is <br/>
     ``` docker image <SUB_COMMAND> (options)```
 
@@ -41,7 +42,7 @@ docker image ls
 docker pull IMAGE_NAME
 
 #ex: pull apache web server
-docker pull httpd
+docker image pull httpd
 
 # remove docker image
 docker image rm XXXXX
@@ -53,77 +54,124 @@ docker image history IMAGE_NAME:TAG
 
 ### Pull Docker Image
 ```
-docker pull IMAGE_NAME:TAG
+docker image pull IMAGE_NAME:TAG
 
 # ex:
-docker pull codewithmosh/hello-docker # deafult will pull latest tag
-docker pull ubuntu
+docker image pull codewithmosh/hello-docker # deafult will pull latest tag
+docker image pull ubuntu
 
 ```
 
 # Docker Container
 > - A ***container*** is an instance of the docker image running as a process
 > - We can have many containers running of the same image
+> - Show list of sub command of ***container***<br/>
+    ``` docker container
+    ```
 > - New Command Format is <br/>
     ``` docker container <SUB_COMMAND> (options)```
 
-### Command Format
-```
-docker container <SUB_COMMAND> (options)
-```
 
+### Docker Container - Run, Start, Stop, Remove
 ```
 # run docker image
-docker run IMAGE_NAME_or_ID
+docker container run IMAGE_NAME_or_ID
 
 # ex:
-docker run hello-docker2
-docker run 36382b85ef7b
+docker container run hello-docker2
+docker container run 36382b85ef7b
 
-# docker run also will run and download from docker hub if the image locally not exist.
+# docker run also will download image (from docker hub if the image locally not exist), create and run a new container.
 # ex:
-docker run ubuntu
+docker container run ubuntu
 
 # run docker image interactivelly
-docker run -it IMAGE_NAME # -it means interactively
+docker container run -it IMAGE_NAME # -it means interactively
 
 # ex:
-docker run -it ubuntu
+docker container run -it ubuntu
 
 # we may get error if using Git Bash: the input device is not a TTY.  
 # If you are using mintty, try prefixing the command with 'winpty'. Then use the following command:
 
-winpty docker run -it ubuntu
+winpty docker container run -it ubuntu
 
 # Run(create and start) docker as daemon with name
-docker run -d --name node1 nginx:stable-alpine
-docker run -d --name node2 nginx:stable-alpine
+docker container run -d --name node1 nginx:stable-alpine
+docker container run -d --name node2 nginx:stable-alpine
 
 # Run (create and start) docker as daemon with name and specific network
-docker run -d --name node1 --network net-custom nginx:stable-alpine
-docker run -d --name node2 --network net-custom nginx:stable-alpine
+docker container run -d --name node1 --network net-custom nginx:stable-alpine
+docker container run -d --name node2 --network net-custom nginx:stable-alpine
 
 # Starting docker container
-docker start node1 node2
+docker container start node1 node2
 
 # Stopping docker daemon
-docker stop node1 node2
+docker container stop node1 node2
 
 # Removing/Deleting container
-docker rm node1
+docker container rm node1
 ```
 
 
+### Docker Container - Port Mapping, Changing Port
 
-# Docker Process
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping.PNG" alt="drawing" width="75%"/>
+
+> - Format Command <br/>
+    ``` 
+    docker container run -p HOST_PORT:CONTAINER_PORT image
+    ``` <br/>
+    ``` 
+    docker container run -publish HOST_PORT:CONTAINER_PORT image
+    ```
+
 ```
-# show proses that running
-docker ps
-docker ps -a
+# example: creating and starting httpd web server
+docker container run -p 8080:80 httpd
 ```
+> Step:
+> 1. Stop existing container
+> 2. Create a new image from a container’s changes using ***docker commit*** or ***docker container commit***
+> 3. Create new container by specifiying the expected port using ***docker container run***
+
+
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
+
+### Docker Container -Ping Between Containers
+
+```
+# Ping from container node1 (172.17.0.2) to node2 (172.17.0.3)
+docker exec node1 ping node2
+docker exec node1 ping 172.17.0.3
+```
+
+
+### Docker Container - Inspect Container Info (network, etc)
+```
+# inspect docker container
+docker container inspect CONTAINER_NAME
+
+#ex:
+# we have docker running
+docker container run -d --name node1 nginx:stable-alpine
+
+# inspect docker container
+docker container inspect node1
+```
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_container_network_id.PNG" alt="drawing" width="75%"/>
+
+
 
 # Docker Network
+> - Show list of sub command of ***network***<br/>
+    ``` docker network
+    ```
+> - New Command Format is <br/>
+    ``` docker network <SUB_COMMAND> (options)```
 ```
+
 # Showing network driver installed once we installed and run docker
 docker network ls
 
@@ -135,24 +183,10 @@ docker network inspect NAME_NETWORK
 docker network inspect bridge
 ```
 
-
-
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_network_bridge_inspect.PNG" alt="drawing" width="75%"/>
 
-```
-# inspect docker container
-docker inspect CONTAINER_NAME
 
-#ex:
-# we have docker running
-docker run -d --name node1 nginx:stable-alpine
-
-# inspect docker container
-docker inspect node1
-```
-<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_container_network_id.PNG" alt="drawing" width="75%"/>
-
-
+### Docker Network - Custom Network
 ```
 # Creating custom network
 docker network create NETWORK_NAME
@@ -170,16 +204,7 @@ docker network rm NETWORK_NAME
 docker network prune
 ```
 
-
-## Ping Between Containers
-
-```
-# Ping from container node1 (172.17.0.2) to node2 (172.17.0.3)
-docker exec node1 ping node2
-docker exec node1 ping 172.17.0.3
-```
-
-## Connecting Existing Container to a Custom Network
+### Docker Network - Connecting Existing Container to a Custom Network
 ```
 # Connecting container to specific network
 docker network connect NETWORK_NAME CONTAINER_NAME
@@ -194,27 +219,13 @@ docker network disconnect NETWORK_NAME CONTAINER_NAME
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_network_custom_connect.PNG" alt="drawing" width="75%"/>
 
 
-# Port Mapping
 
-<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping.PNG" alt="drawing" width="75%"/>
-
+# Docker Process
 ```
-docker run -p HOST_PORT:CONTAINER_PORT image
-
-# example: creating and starting httpd web server
-docker run -p 8080:80 httpd
+# show proses that running
+docker ps
+docker ps -a
 ```
-
-## Changing Port
-```
-# Step:
-# 1. Stop existing container
-# 2. Create a new image from a container’s changes using docker commit
-# 3. Create new container by specifiying the expected port using docker run
-```
-
-<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_port_mapping_change.PNG" alt="drawing" width="75%"/>
-
 
 # Docker Compose
 
