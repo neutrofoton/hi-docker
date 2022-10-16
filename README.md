@@ -99,9 +99,13 @@ docker container run -it ubuntu
 
 winpty docker container run -it ubuntu
 
-# Run(create and start) docker as daemon with name
+# Run(create and start) docker as daemon (-d or --detach) with name
 docker container run -d --name node1 nginx:stable-alpine
 docker container run -d --name node2 nginx:stable-alpine
+
+# OR
+docker container run --detach --name node1 nginx:stable-alpine
+docker container run --detach --name node2 nginx:stable-alpine
 
 # Run (create and start) docker as daemon with name and specific network
 docker container run -d --name node1 --network net-custom nginx:stable-alpine
@@ -130,6 +134,8 @@ docker container run -publish HOST_PORT:CONTAINER_PORT image
 docker container run -p 8080:80 httpd
 ```
 
+We will get a "bind" error if the left number (host port) is being used by anything else, even another container.
+We can use any port on the left, like 8080:80 or 8888:80, then use localhost:8888 when testing.
 <br/>
 
 **Step of Changing Port Mapping:**
@@ -166,6 +172,15 @@ docker container inspect node1
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_container_network_id.PNG" alt="drawing" width="75%"/>
 
 
+### Docker Container - Logs
+```
+docker container logs CONTAINER_NAME_or_ID
+```
+
+### Docker Container - Process Running in Container
+```
+docker container top CONTAINER_NAME_or_ID
+```
 
 # Docker Network
 > - Show list of sub command of ***network***<br/>
