@@ -55,7 +55,7 @@ docker image history IMAGE_NAME
 docker image history IMAGE_NAME:TAG
 ```
 
-### Pull Docker Image
+### Docker Image - Pull
 ```
 docker image pull IMAGE_NAME:TAG
 
@@ -134,7 +134,7 @@ docker container rm node1
 # example: creating and starting httpd web server
 docker container run -p 8080:80 httpd
 ```
-> ** Step of Changing Port Mapping:**
+> **Step of Changing Port Mapping:**
 > 1. Stop existing container
 > 2. Create a new image from a container’s changes using ***docker commit*** or ***docker container commit***
 > 3. Create new container by specifiying the expected port using ***docker container run***
@@ -192,10 +192,11 @@ docker network inspect bridge
 
 
 ### Docker Network - Custom Network
-```
-# Creating custom network
-docker network create NETWORK_NAME
+> - command of ***Creating Custom Network***<br/>
+    ```docker network create NETWORK_NAME
+    ```
 
+```
 #ex:
 docker network create net-custom
 
@@ -210,10 +211,11 @@ docker network prune
 ```
 
 ### Docker Network - Connecting Existing Container to a Custom Network
-```
-# Connecting container to specific network
-docker network connect NETWORK_NAME CONTAINER_NAME
+> - command of ***Connecting container to specific network***<br/>
+    ```docker network connect NETWORK_NAME CONTAINER_NAME
+    ```
 
+```
 #ex:
 docker network connect net-custom node1
 
