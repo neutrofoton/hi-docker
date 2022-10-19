@@ -1,3 +1,4 @@
+# Installing PostgreSQL
 1. Pull postgress image
    ```
    docker image pull postgres
@@ -25,12 +26,14 @@
     docker inspect postgresql -f "{{json .NetworkSettings.Networks }}"
     ```
 
-4. Pull pgadmin4 image
+
+# Installing PgAdmin 4
+1. Pull pgadmin4 image
     ```
     docker image pull dpage/pgadmin4
     ```
 
-5. Create container of pgadmin4
+2. Create container of pgadmin4
     ```
     # oneline command
     docker container run -p 5050:80 --name pgadmin4 -e "PGADMIN_DEFAULT_EMAIL=me@localhost.com" -e "PGADMIN_DEFAULT_PASSWORD=postgres" -d dpage/pgadmin4
@@ -42,3 +45,4 @@
     -e "PGADMIN_DEFAULT_PASSWORD=postgres" \
     -d dpage/pgadmin4
     ```
+3. Open ```http://localhost:5050```
