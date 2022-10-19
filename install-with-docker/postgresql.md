@@ -46,3 +46,6 @@
     -d dpage/pgadmin4
     ```
 3. Open ```http://localhost:5050```
+
+# References
+1. https://docs.docker.com/desktop/troubleshoot/topics/
