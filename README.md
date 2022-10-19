@@ -75,7 +75,7 @@ docker image pull ubuntu
     ``` docker container <SUB_COMMAND> (options)```
 
 
-### Docker Container - Run, Start, Stop, Remove
+### Docker Container - Run, Start, Stop, Remove, Rename
 ```
 # run docker image
 docker container run IMAGE_NAME_or_ID
@@ -119,6 +119,9 @@ docker container stop node1 node2
 
 # Removing/Deleting container
 docker container rm node1
+
+# Rename container
+docker container rename OLD_NAME NEW_NAME
 ```
 
 ### Docker Container - Port Mapping, Changing Port
@@ -180,6 +183,15 @@ docker container logs CONTAINER_NAME_or_ID
 ### Docker Container - Process Running in Container
 ```
 docker container top CONTAINER_NAME_or_ID
+```
+
+### Docker Container - Running an Interactive Shell in a Docker Container
+```
+# running shell
+docker exec -it CONTAINER_NAME_OR_ID sh
+
+# running bash
+docker exec -it CONTAINER_NAME_OR_ID bash
 ```
 
 # Docker Network
