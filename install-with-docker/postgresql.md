@@ -5,12 +5,14 @@
 
 2. Create container of postgres
     ```
+    # example 1: linux
     docker container run --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres
 
+    # example 2: windows
     docker container run --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /d/Users/myaccount/postgresql/data -d postgres
     ```
 
-    - **PostgreSQL** is the name of the Docker Container.
+    - **postgresql** is the name of the Docker Container.
     - **-e POSTGRES_USER** is the parameter that sets a unique username to the Postgres database.
     - **-e POSTGRES_PASSWORD** is the parameter that allows you to set the password of the Postgres database.
     - **-p 5432:5432** is the parameter that establishes a connection between the Host Port and Docker Container Port. In this case, both ports are given as 5432, which indicates requests sent to the Host Ports will automatically redirect to the Docker Container Port. In addition, 5432 is also the same port where PostgreSQL will be accepting requests from the client.
@@ -30,12 +32,13 @@
 
 5. Create container of pgadmin4
     ```
+    # oneline command
     docker container run -p 5050:80 --name pgadmin4 -e "PGADMIN_DEFAULT_EMAIL=me@localhost.com" -e "PGADMIN_DEFAULT_PASSWORD=postgres" -d dpage/pgadmin4
 
+    # multiline command
     docker container run -p 5050:80 \
     --name pgadmin4 \
     -e "PGADMIN_DEFAULT_EMAIL=me@localhost.com" \
     -e "PGADMIN_DEFAULT_PASSWORD=postgres" \
     -d dpage/pgadmin4
-
     ```
