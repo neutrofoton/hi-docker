@@ -9,6 +9,15 @@
     # example 1: linux
     docker container run --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres
 
+    # example 2: mapping the data directory of the PostgreSQL from inside the container to a directory on local machine
+    docker container run \
+        --name postgresql \
+        -e POSTGRES_PASSWORD=postgres \
+        -d \
+        -v ${PWD}/postgres-docker:/var/lib/postgresql/data \
+        -p 5432:5432 postgres 
+
+
     # example 2: windows
     docker container run --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /d/Users/myaccount/postgresql/data -d postgres
     ```
