@@ -198,6 +198,47 @@ docker container stats
 
 
 ### Docker Container - Running an Interactive Shell in a Docker Container
+
+***Parameter description:***
+- ***-t*** is pseudo-tty that simulates a real terminal like what ssh does
+- ***-i*** is interactive that keeps session open to receive terminal input
+
+
+<br/>
+
+***1. Docker Container Shell - Executing command at container creation***
+```
+docker container run --help
+```
+
+Usage:<br/>
+<code>docker container run [OPTIONS] IMAGE **[COMMAND] [ARG...]**</code>
+
+***<b>COMMAND [ARG...]</b> that will be sent to new the container to run***. <br/>
+The image has default command to run. But we can change by passing it at the run image command arg.
+
+Example:
+```
+docker container run -it --name proxy1 nginx bash
+docker container run -it --name proxy2 nginx sh
+
+```
+<br/>
+
+***2. Docker Container Shell - Getting a shell inside existing container***
+
+```
+# container exec help
+docker container exec --help
+```
+
+Usage:<br/>
+<code>docker container exec [OPTIONS] CONTAINER **COMMAND [ARG...]**</code>
+
+***<b>COMMAND [ARG...]</b> that will be sent to the container to run***
+
+<br/>
+
 ```
 # running shell
 docker exec -it CONTAINER_NAME_OR_ID sh
@@ -205,6 +246,8 @@ docker exec -it CONTAINER_NAME_OR_ID sh
 # running bash
 docker exec -it CONTAINER_NAME_OR_ID bash
 ```
+
+
 
 # Docker Network
 > - Show list of sub command of ***network***<br/>
