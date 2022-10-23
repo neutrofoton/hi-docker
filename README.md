@@ -135,6 +135,10 @@ docker container run -publish HOST_PORT:CONTAINER_PORT image
 
 # example: creating and starting httpd web server
 docker container run -p 8080:80 httpd
+
+# check port used by container
+docker container port CONTAINER_NAME_OR_ID
+docker container port httpd
 ```
 
 We will get a "bind" error if the left number (host port) is being used by anything else, even another container.
@@ -174,6 +178,16 @@ docker container inspect node1
 ```
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_container_network_id.PNG" alt="drawing" width="75%"/>
 
+<br/>
+
+Querying the json element of ***docker container inspect*** can be done with the following command:
+```
+# inspect specific element in json container
+docker container inspect --format '{{ .NetworkSettings.IPAddress }}' CONTAINER_NAME_or_ID
+docker container inspect --format '{{ .NetworkSettings.IPAddress }}' mysql
+
+docker container inspect --format '{{.NetworkSettings.Networks.bridge.Gateway}}' mysql
+```
 
 ### Docker Container - Logs
 ```
@@ -259,6 +273,12 @@ docker exec -it CONTAINER_NAME_OR_ID sh
 
 
 # Docker Network
+Docker network notes:
+- Each container connected to a private virtual network ***bridge***
+- Each virtual network routes through NAT firewall on host IP
+- All containers on a virtual network can talk to each other without ***-p***
+
+The command format is:
 > - Show list of sub command of ***network***<br/>
     ``` docker network
     ```
