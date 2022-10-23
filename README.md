@@ -208,6 +208,7 @@ docker container stats
 
 ***1. Docker Container Shell - Executing command at container creation***
 ```
+# container run help
 docker container run --help
 ```
 
@@ -217,9 +218,14 @@ Usage:<br/>
 ***<b>COMMAND [ARG...]</b> that will be sent to new the container to run***. <br/>
 The image has default command to run. But we can change by passing it at the run image command arg.
 
+<br/>
+
 Example:
 ```
+# running bash
 docker container run -it --name proxy1 nginx bash
+
+# running shell
 docker container run -it --name proxy2 nginx sh
 
 ```
@@ -238,13 +244,16 @@ Usage:<br/>
 ***<b>COMMAND [ARG...]</b> that will be sent to the container to run***
 
 <br/>
+Example:
 
 ```
+# running bash
+docker exec -it CONTAINER_NAME_OR_ID bash
+
 # running shell
 docker exec -it CONTAINER_NAME_OR_ID sh
 
-# running bash
-docker exec -it CONTAINER_NAME_OR_ID bash
+
 ```
 
 
