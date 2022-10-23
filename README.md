@@ -155,13 +155,7 @@ We can use any port on the left, like <code>8080:80</code> or <code>8888:80</cod
 
 <br/>
 
-### Docker Container -Ping Between Containers
 
-```
-# Ping from container node1 (172.17.0.2) to node2 (172.17.0.3)
-docker container exec node1 ping node2
-docker container exec node1 ping 172.17.0.3
-```
 
 
 ### Docker Container - Inspect Container Info (network, etc)
@@ -270,7 +264,15 @@ docker exec -it CONTAINER_NAME_OR_ID sh
 
 ```
 
+### Docker Container -Ping Between Containers
 
+```
+# Ping from container node1 (172.17.0.2) to node2 (172.17.0.3)
+docker container exec node1 ping node2
+docker container exec node1 ping 172.17.0.3
+
+docker container exec -it node1 ping node2
+```
 
 # Docker Network
 Docker network notes:
