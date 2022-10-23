@@ -177,13 +177,25 @@ docker container inspect node1
 
 ### Docker Container - Logs
 ```
+# check log of specific container
 docker container logs CONTAINER_NAME_or_ID
+
+# example: random password generated on creating mysql container listed in the log.
 ```
 
 ### Docker Container - Process Running in Container
 ```
+# list running processes in a specific container.
 docker container top CONTAINER_NAME_or_ID
+
+# show running process of container from the host
+ps aux
+
+# show live performance data for all containers
+docker container stats
 ```
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_container_stats.PNG" alt="drawing" width="75%"/>
+
 
 ### Docker Container - Running an Interactive Shell in a Docker Container
 ```
