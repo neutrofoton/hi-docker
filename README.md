@@ -19,7 +19,8 @@ docker
 ```
 
 # Docker Image
-> - An ***image*** is the application (binaries, libraries and source code) we want to run.
+> - An ***image*** is app binaries and dependencies. It's an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime.
+
 > - Docker's default image "registry" is called Docker Hub (hub.docker.com)
 > - Show list of sub command of ***image***<br/>
     ``` docker image
@@ -256,10 +257,10 @@ Example:
 
 ```
 # running bash
-docker exec -it CONTAINER_NAME_OR_ID bash
+docker container exec -it CONTAINER_NAME_OR_ID bash
 
 # running shell
-docker exec -it CONTAINER_NAME_OR_ID sh
+docker container exec -it CONTAINER_NAME_OR_ID sh
 
 
 ```
