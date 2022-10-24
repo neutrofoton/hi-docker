@@ -18,6 +18,42 @@ docker info
 docker
 ```
 
+### Docker Hub
+
+```
+# login
+docker login
+winpty docker login
+
+# logout
+docker logout
+```
+
+Check whether we have logged or not
+```
+cat .docker/config.json
+```
+
+If we have logged in, the response will be: <br/>
+```
+{
+        "auths": {
+            "https://index.docker.io/v1/":{}
+        },
+        "credsStore": "desktop"
+}
+```
+
+if not or logged out
+```
+{
+        "auths":{},
+        "credsStore": "desktop"
+}
+```
+
+> To create private repository, create repository first, then uploaded.
+
 # Docker Image
 > - An ***image*** is app binaries and dependencies. It's an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime.
 
@@ -65,6 +101,40 @@ docker image pull codewithmosh/hello-docker # deafult will pull latest tag
 docker image pull ubuntu
 
 ```
+
+### Docker Image - Tag and Push to Docker Hub
+
+Docker image information format: <br/>
+
+```
+{user}/{repo}:{tag}
+```
+
+```
+docker image tag --help
+
+```
+Usage:  <br/>
+<code>docker image tag ***SOURCE_IMAGE[:TAG]*** ***TARGET_IMAGE[:TAG]***</code>
+<br/>
+If we don't specify the tag, the default will be **latest**
+<p></p>
+Example:
+
+```
+# re-tag existing image
+docker image tag nginx neutrofoton/nginx
+```
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_image_retag.PNG" alt="drawing" width="75%"/>
+
+<br/>
+
+To push to docker hub
+```
+# push to image hub
+docker image push neutrofoton/nginx
+```
+
 
 # Docker Container
 > - A ***container*** is an instance of the docker image which runs as a process
