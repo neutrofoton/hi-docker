@@ -31,6 +31,7 @@ docker logout
 
 Check whether we have logged or not
 ```
+cd ~
 cat .docker/config.json
 ```
 
