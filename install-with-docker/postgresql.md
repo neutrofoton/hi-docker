@@ -18,7 +18,7 @@
         -p 5432:5432 postgres 
 
 
-    # example 2: windows
+    # example 3: windows
     docker container run --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /d/Users/myaccount/postgresql/data -d postgres
     ```
 

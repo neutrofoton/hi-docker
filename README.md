@@ -56,8 +56,7 @@ if not or logged out
 > To create private repository, create repository first, then uploaded.
 
 # Docker Image
-> - An ***image*** is app binaries and dependencies. It's an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime.
-
+> - An ***image*** is app binaries and the app's dependencies. It's an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime. Inside the image there is not a complete OS. No Kernel, no kernel modules (e.g: drivers). It is just binaries that our application needed, because the host provide the kernel. It is characteristic that differentiate from the VM.
 > - Docker's default image "registry" is called Docker Hub (hub.docker.com)
 > - Show list of sub command of ***image***<br/>
     ``` docker image
@@ -88,10 +87,10 @@ docker image pull httpd
 # remove docker image
 docker image rm XXXXX
 
-# Showing docker image history
-docker image history IMAGE_NAME
-docker image history IMAGE_NAME:TAG
+
 ```
+
+
 
 ### Docker Image - Pull
 ```
@@ -136,6 +135,17 @@ To push to docker hub
 docker image push neutrofoton/nginx
 ```
 
+### Docker Image - History
+> - Images are made up of file system changes and metadata
+> - Each layer is uniquely identified and only stored once on a host
+> - This saves storage space on host and transfer time in push/pull
+> - A container is just a single read/write layer on top of image
+
+```
+# Showing docker image history
+docker image history IMAGE_NAME
+docker image history IMAGE_NAME:TAG
+```
 
 # Docker Container
 > - A ***container*** is an instance of the docker image which runs as a process
