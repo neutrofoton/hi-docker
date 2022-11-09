@@ -426,6 +426,17 @@ docker ps
 docker ps -a
 ```
 
+# Docker Volumes and Bind Mounts
+
+> ***Volume*** <br/> 
+  a new directory is created within Docker's storage directory on the host machine, and Docker manages that directory's content.
+  <br/><br/>
+> ***Bind Mount*** <br/> 
+  A file or directory on the host machine is mounted into a container. The file or directory is referenced by its full or relative path on the host machine.
+
+  
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_types-of-mounts.png" alt="drawing" width="75%"/>
+
 # Docker Compose
 
 ```
