@@ -19,7 +19,7 @@
 
 
     # example 3: windows
-    docker container run --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /d/Users/myaccount/postgresql/data -d postgres
+    docker container run --name postgresql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /d/Users/myaccount/postgresql/data:/var/lib/postgresql/data -d postgres
     ```
 
     - **postgresql** is the name of the Docker Container.
