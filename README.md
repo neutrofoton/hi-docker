@@ -432,6 +432,7 @@ docker ps -a
 <img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_types-of-mounts.png" alt="drawing" width="75%"/>
 <br/>
 <br/>
+
 ### ***Volume***
   Volume is a directory created within Docker's storage directory on the host machine, and Docker manages that directory's content.   
 
