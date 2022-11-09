@@ -427,6 +427,11 @@ docker ps -a
 ```
 
 # Docker Volumes and Bind Mounts
+
+
+<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_types-of-mounts.png" alt="drawing" width="75%"/>
+<br/>
+<br/>
 ### ***Volume***
   Volume is a directory created within Docker's storage directory on the host machine, and Docker manages that directory's content.   
 
@@ -463,7 +468,6 @@ docker ps -a
 tmpfs mounts are stored in the host system’s memory only, and are never written to the host system’s filesystem.
 
   
-<img src="https://github.com/neutrofoton/HiDocker/blob/main/images/ss_types-of-mounts.png" alt="drawing" width="75%"/>
 
 # Docker Compose
 
