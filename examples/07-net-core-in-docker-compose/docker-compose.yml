@@ -8,29 +8,31 @@ services:
   myapi:
     image: myapi:latest
     depends_on:
-      - "db_postgres"
+      - db_postgres
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:5000"     
+      - 8000:5000     
     environment:
-      DB_CONNECTION_STRING: "host=db_postgres;port=5432;database=blogdb;username=bloguser;password=bloguser"
+      DB_CONNECTION_STRING: host=db_postgres;port=5432;database=blogdb;username=bloguser;password=bloguser
+      ASPNETCORE_HTTP_PORT: https://+:5001
+      ASPNETCORE_URLS: http://+:5000
     networks:
       - app-network  
   
   db_postgres:
     image: postgres:latest
     ports:
-      - "5432"
+      - 5432
     restart: always
     volumes:
       - db_volume:/var/lib/postgresql/data
       - ./dbscript/blog.sql :/docker-entrypoint-initdb.d/blog.sql
     environment:
-      POSTGRES_USER: "bloguser"
-      POSTGRES_PASSWORD: "bloguser"
-      POSTGRES_DB: "blogdb"
+      POSTGRES_USER: bloguser
+      POSTGRES_PASSWORD: bloguser
+      POSTGRES_DB: blogdb
     networks:
       - app-network
 volumes:

@@ -10,5 +10,5 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-focal
 WORKDIR /app
 COPY --from=build /app ./
 
-EXPOSE 80
+EXPOSE 5000
 ENTRYPOINT ["dotnet","MyWebApi.dll"]
