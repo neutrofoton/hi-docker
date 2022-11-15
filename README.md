@@ -273,6 +273,25 @@ docker container logs CONTAINER_NAME_or_ID
 # example: random password generated on creating mysql container listed in the log.
 ```
 
+1. Display Only the Latest Lines
+```
+docker logs --tail 100 <container ID>
+```
+
+2. Stream Logs Until a Specific Point in Time
+```
+# logs written during the first three seconds
+docker logs --follow --until=3s
+
+# the logs for the last 30 minutes
+docker logs --follow --until=30m
+```
+
+3. Stream Logs From a Specific Point in Time
+```
+docker logs --since 2019-03-02 <container ID>
+```
+
 ### Docker Container - Process Running in Container
 ```
 # list running processes in a specific container.
