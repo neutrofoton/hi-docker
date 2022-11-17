@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MyConsole.Infrastructure;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,7 @@ namespace MyConsole.Services
 {
     public class WorkerService : IHostedService, IDisposable
     {
-        private readonly ILogger logger;
-
-        public bool isRunningProcess=false;
-        public WorkerService(ILogger<WorkerService> logger )
-        {
-            this.logger = logger;
-        }
+        public bool isRunningProcess=false;       
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Thread t = new Thread(new ThreadStart(Do));
@@ -34,7 +29,7 @@ namespace MyConsole.Services
         {
             isRunningProcess=false;
 
-            logger.LogInformation($"ThreadProc is stopped at: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}");
+            Log.Information($"ThreadProc is stopped at: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}");
 
             return Task.CompletedTask;
         }
@@ -44,7 +39,7 @@ namespace MyConsole.Services
         {
             while (true)
             {
-                logger.LogInformation($"ThreadProc at: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}");
+                Log.Information($"ThreadProc at: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}");
                 Thread.Sleep(1000);
 
                 if (!isRunningProcess)
@@ -71,13 +66,13 @@ namespace MyConsole.Services
 
         ~WorkerService()
         {
-            logger.LogInformation($"Destructor of {this.GetType().Name} class is called");
+            Log.Information($"Destructor of {this.GetType().Name} class is called");
             Dispose(false);
         }
 
         public void Dispose()
         {
-            logger.LogInformation($"Dispose() method of {this.GetType().Name} class is called");
+            Log.Information($"Dispose() method of {this.GetType().Name} class is called");
 
             Dispose(true);
             GC.SuppressFinalize(this);

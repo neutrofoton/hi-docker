@@ -5,6 +5,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MyConsole.Infrastructure;
 using MyConsole.Services;
+using Serilog;
+using Serilog.Events;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -24,10 +26,13 @@ namespace MyConsole
                         optional: true);
                     configBuilder.AddEnvironmentVariables();
                 })
-                .ConfigureLogging((hostContext, configLogging) =>
+                .UseSerilog((hostContext, services, configLogging) =>
                 {
-                    configLogging.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
-                    configLogging.AddConsole();
+
+                    configLogging
+                        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                        .WriteTo.Console()
+                        .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day);
                 })
                 .ConfigureServices((hostContext, services) =>
                 {

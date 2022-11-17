@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,10 @@ namespace MyConsole.Services
 {
     public class TimedHostedService : IHostedService, IDisposable
     {
-        private readonly ILogger logger;
         private Timer timer;
-
-        public TimedHostedService(ILogger<TimedHostedService> logger)
-        {
-            this.logger = logger;
-        }
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            logger.LogInformation("Service is starting.");
+            Log.Information("Service is starting.");
 
             timer = new Timer(DoWork, null, TimeSpan.Zero,
                 TimeSpan.FromSeconds(5));
@@ -30,12 +24,12 @@ namespace MyConsole.Services
 
         private void DoWork(object state)
         {
-            logger.LogInformation("Service is running.");
+            Log.Information("Service is running.");
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            logger.LogInformation("Service is stopping.");
+            Log.Information("Service is stopping.");
 
             timer?.Change(Timeout.Infinite, 0);
 
