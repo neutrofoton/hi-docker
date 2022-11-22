@@ -13,3 +13,20 @@
 2. Run the example app.
 
    
+
+# Notes
+1. The env variable for .Net Core Console App is called <code>ENVIRONMENT</code>. It's called <code>ASPNETCORE_ENVIRONMENT</code> in ASP.Net Core.
+
+
+# Deploy to Docker
+1. Run docker compose build
+```
+docker-compose build
+```
+
+2. Build container
+```
+docker-compose up
+```
+
+3. Monitor the log console in terminal
