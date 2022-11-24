@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using MyRedis.Services;
 using Serilog;
 using Serilog.Events;
+using MyRedis.Caching;
+using MyRedis.Caching.Extensions;
 
 class Program
 {
@@ -29,15 +31,28 @@ class Program
             })
             .ConfigureServices((hostContext, services) =>
             {
-                string config = $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json";
+                //string config = $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json";
+                IConfigurationSection redisConfig = hostContext.Configuration.GetSection(nameof(RedisCacheConfiguration));
 
-                services.AddStackExchangeRedisCache(options => {
-                    options.Configuration= hostContext.Configuration.GetValue<string>("Cache:Redis");
-                    options.InstanceName = "RedisDemo_";
-                });
+                services.Configure<RedisCacheConfiguration>(redisConfig);
+                var redisCacheConfig = redisConfig.Get<RedisCacheConfiguration>();
+
+                if (redisCacheConfig != null)
+                {
+                    services.AddStackExchangeRedisCache(options =>
+                    {
+                        options.Configuration = $"{redisCacheConfig.Server}:{redisCacheConfig.Port}";
+                        options.InstanceName = $"{redisCacheConfig.InstanceName}";
+                    });
+
+                    services.AddRedisMultiplexer(redisCacheConfig.ServerFullName);
+                }
 
                 services.AddScoped<IHostedService, WorkerService>();
-            });
+                
+            })
+            
+            ;
 
         await hostBuilder.RunConsoleAsync();
     }

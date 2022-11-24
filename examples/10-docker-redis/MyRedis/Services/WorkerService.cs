@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Hosting;
-using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyRedis.Support;
+using Microsoft.Extensions.Options;
+using MyRedis.Caching;
+using MyRedis.Caching.Extensions;
 using MyRedis.Model;
+using Serilog;
+using StackExchange.Redis;
 using System.Text.Json;
 
 namespace MyRedis.Services
@@ -17,8 +15,13 @@ namespace MyRedis.Services
         public bool isRunningProcess = false;
 
         private IDistributedCache cache;
-        public WorkerService(IDistributedCache cache)
+        private IConnectionMultiplexer multiplexer;
+        private readonly IOptionsMonitor<RedisCacheConfiguration> optionRedisCacheConfiguration;
+
+        public WorkerService(IOptionsMonitor<RedisCacheConfiguration> optionRedisCacheConfiguration, IConnectionMultiplexer multiplexer, IDistributedCache cache)
         {
+            this.optionRedisCacheConfiguration = optionRedisCacheConfiguration;
+            this.multiplexer = multiplexer;
             this.cache = cache;
         }
 
@@ -41,7 +44,6 @@ namespace MyRedis.Services
             return Task.CompletedTask;
         }
 
-
         private async void Do()
         {
             var key = $"{this.GetType().Name}_data";
@@ -62,13 +64,36 @@ namespace MyRedis.Services
 
                 Task.WaitAll(new Task[] { setTask, waitTask });
 
-                Job jobCache = await cache.GetCacheAsync<Job>(key);
+                Job jobCache1 = await cache.GetCacheAsync<Job>(key);
+                Job jobCache2 = await cache.GetCacheAsync<Job>(key);
 
-                Log.Information($"{"Data from cache".PadRight(20)}: {JsonSerializer.Serialize<Job>(jobCache)}");
+                Log.Information($"{"Data from cache1".PadRight(20)} [{key}] : {JsonSerializer.Serialize<Job>(jobCache1)}");
+                Log.Information($"{"Data from cache2".PadRight(20)} [{key}] : {JsonSerializer.Serialize<Job>(jobCache2)}");
+
                 Thread.Sleep(1000);
+
+                //ShowAllDataInCache();
 
                 if (!isRunningProcess)
                     break;
+            }
+        }
+
+        private void ShowAllDataInCache()
+        {
+            IEnumerable<RedisKey> keys = multiplexer
+                .GetServer(optionRedisCacheConfiguration.CurrentValue.ServerFullName)
+                .Keys();
+
+            var db = multiplexer.GetDatabase();
+            string instance = optionRedisCacheConfiguration.CurrentValue.InstanceName;
+
+            Log.Error($"============================ keys ==================================");
+
+            foreach (var k in keys)
+            {
+                string cutKey = k.ToString().Replace(instance, string.Empty);
+                Log.Error($"{k} => {cutKey} => {db.StringGet(new RedisKey(cutKey))}");
             }
         }
 
@@ -81,7 +106,13 @@ namespace MyRedis.Services
             {
                 if (disposing)
                 {
+
                     // TODO: dispose managed state (managed objects).
+                    if (multiplexer != null)
+                    {
+                        ShowAllDataInCache();
+                        multiplexer.Dispose();
+                    }
                 }
 
                 // TODO: free unmanaged resources	

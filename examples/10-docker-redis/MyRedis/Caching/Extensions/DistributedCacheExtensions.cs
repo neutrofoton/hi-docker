@@ -1,28 +1,16 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Options;
 using MyRedis.Model;
-using StackExchange.Redis;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MyRedis.Support
+namespace MyRedis.Caching.Extensions
 {
-    public class CacheException : ApplicationException
-    {
-
-        public CacheException() : base() { }
-        public CacheException(string? message) : base(message) { }
-        public CacheException(string? message, Exception? innerException) : base(message, innerException) { }
-        protected CacheException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    }
-
-    public static class CacheHelper
+    public static class DistributedCacheExtensions
     {
         public static async Task SaveCacheAsync<T>(this IDistributedCache cache,
                                                    string key,
@@ -35,15 +23,15 @@ namespace MyRedis.Support
             options.AbsoluteExpirationRelativeToNow = absoluteExpireTime ?? TimeSpan.FromSeconds(60);
             options.SlidingExpiration = slidingExpireTime ?? TimeSpan.FromSeconds(60);
 
-            
-            if(data is IModel || data is ICollection<T> || data is ICollection)
+
+            if (data is IModel || data is ICollection<T> || data is ICollection)
             {
                 var json = JsonSerializer.Serialize(data);
                 await cache.SetStringAsync(key, json, options);
             }
-            else if(data is byte[])
+            else if (data is byte[])
             {
-                await cache.SetAsync(key, (byte[])data , options);
+                await cache.SetAsync(key, (byte[])data, options);
             }
             else
             {
@@ -52,13 +40,13 @@ namespace MyRedis.Support
         }
 
         public static async Task<T> GetCacheAsync<T>(this IDistributedCache cache,
-                                                       string key) where T: class
-        {   
+                                                       string key) where T : class
+        {
             if (typeof(T).IsAssignableTo(typeof(IModel)) || typeof(T).IsAssignableTo(typeof(IEnumerable)))
             {
                 var json = await cache.GetStringAsync(key);
                 if (string.IsNullOrEmpty(json))
-                    return default(T);
+                    return default;
 
                 return JsonSerializer.Deserialize<T>(json);
             }
