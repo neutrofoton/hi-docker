@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using MyRedis.Caching;
+using MyRedis.Caching.Model;
+using MyRedis.Caching.Repository;
+using MyRedis.Model;
 using MyRedis.Services;
 using Serilog;
 using Serilog.Events;
-using MyRedis.Caching;
-using MyRedis.Caching.Extensions;
 
 class Program
 {
@@ -42,14 +43,17 @@ class Program
                     services.AddStackExchangeRedisCache(options =>
                     {
                         options.Configuration = $"{redisCacheConfig.Server}:{redisCacheConfig.Port}";
-                        options.InstanceName = $"{redisCacheConfig.InstanceName}";
+                        options.InstanceName = $"{redisCacheConfig.Name}";
                     });
 
-                    services.AddRedisMultiplexer(redisCacheConfig.ServerFullName);
                 }
 
-                services.AddScoped<IHostedService, WorkerService>();
-                
+                services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
+
+                services.AddScoped<IRedisRepository<Job>, RedisRepository<Job>>();
+                //services.AddScoped<IHostedService, WorkerService>();
+                services.AddScoped<IHostedService, WorkerServiceWithRedisMultiplexer>();
+
             })
             
             ;

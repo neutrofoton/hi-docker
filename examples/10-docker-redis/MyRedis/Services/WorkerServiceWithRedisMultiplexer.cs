@@ -1,25 +1,20 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using MyRedis.Caching;
+﻿using Microsoft.Extensions.Hosting;
 using MyRedis.Caching.Extension;
-using MyRedis.Caching.Model;
+using MyRedis.Caching.Repository;
 using MyRedis.Model;
 using Serilog;
-using StackExchange.Redis;
 using System.Text.Json;
 
 namespace MyRedis.Services
 {
-    public class WorkerService : IHostedService, IDisposable
+    public class WorkerServiceWithRedisMultiplexer : IHostedService, IDisposable
     {
         public bool isRunningProcess = false;
+        private IRedisRepository<Job> jobRedisRepository;
 
-        private IDistributedCache cache;
-
-        public WorkerService(IDistributedCache cache)
+        public WorkerServiceWithRedisMultiplexer(IRedisRepository<Job> jobRedisRepository)
         {
-            this.cache = cache;
+            this.jobRedisRepository = jobRedisRepository;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -43,7 +38,7 @@ namespace MyRedis.Services
 
         private async void Do()
         {
-            var key = $"{this.GetType().Name}_data";
+            var key = $"{this.GetType().Name}:job";
             var job = new Job();
 
             while (true)
@@ -54,22 +49,19 @@ namespace MyRedis.Services
                 job.Name = $"Job at {now.ToString("dd-MMM-yyyy hh:mm:ss")}";
 
 
-                Task setTask = cache.SaveCacheAsync<Job>(key, job);
+                //save job
+                Task saveTask = jobRedisRepository.SaveAsync(key, job, TimeSpan.FromSeconds(30));
 
-                Task waitTask =Task.Delay(1000);
+                Task waitTask = Task.Delay(1000);
                 Task logTask = Task.Run(() => Log.Warning($"{"Save to cache".PadRight(20)}: {JsonSerializer.Serialize<Job>(job)}"));
 
-                Task.WaitAll(new Task[] { setTask, waitTask });
+                Task.WaitAll(new Task[] { saveTask, waitTask, logTask });
 
-                Job jobCache1 = await cache.GetCacheAsync<Job>(key);
-                Job jobCache2 = await cache.GetCacheAsync<Job>(key);
+                Job jobCache1 = await jobRedisRepository.GetAsync(key);
 
                 Log.Information($"{"Data from cache1".PadRight(20)} [{key}] : {JsonSerializer.Serialize<Job>(jobCache1)}");
-                Log.Information($"{"Data from cache2".PadRight(20)} [{key}] : {JsonSerializer.Serialize<Job>(jobCache2)}");
 
                 Thread.Sleep(1000);
-
-                //ShowAllDataInCache();
 
                 if (!isRunningProcess)
                     break;
@@ -77,21 +69,14 @@ namespace MyRedis.Services
         }
 
         private void ShowAllDataInCache()
-        {
-            //IEnumerable<RedisKey> keys = multiplexer
-            //    .GetServer(optionRedisCacheConfiguration.CurrentValue.ServerFullName)
-            //    .Keys();
+        {  
+            var keys = jobRedisRepository.GetAllKeys();
+            Log.Error($"============================ keys ==================================");
 
-            //var db = multiplexer.GetDatabase();
-            //string instance = optionRedisCacheConfiguration.CurrentValue.Name;
-
-            //Log.Error($"============================ keys ==================================");
-
-            //foreach (var k in keys)
-            //{
-            //    string cutKey = k.ToString().Replace(instance, string.Empty);
-            //    Log.Error($"{k} => {cutKey} => {db.StringGet(new RedisKey(cutKey))}");
-            //}
+            foreach (var k in keys)
+            {  
+                Log.Error($"{k}");
+            }
         }
 
         #region IDisposable Support
@@ -105,11 +90,7 @@ namespace MyRedis.Services
                 {
 
                     // TODO: dispose managed state (managed objects).
-                    //if (multiplexer != null)
-                    //{
-                    //    ShowAllDataInCache();
-                    //    multiplexer.Dispose();
-                    //}
+                    ShowAllDataInCache();
                 }
 
                 // TODO: free unmanaged resources	
@@ -117,7 +98,7 @@ namespace MyRedis.Services
             }
         }
 
-        ~WorkerService()
+        ~WorkerServiceWithRedisMultiplexer()
         {
             Log.Information($"Destructor of {this.GetType().Name} class is called");
             Dispose(false);

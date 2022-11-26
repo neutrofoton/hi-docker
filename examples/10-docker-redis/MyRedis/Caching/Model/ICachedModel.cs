@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyRedis.Model
+namespace MyRedis.Caching.Model
 {
-    public interface IModel
+    public interface ICachedModel
     {
     }
 }

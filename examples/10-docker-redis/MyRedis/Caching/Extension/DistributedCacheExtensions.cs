@@ -1,14 +1,9 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using MyRedis.Model;
-using System;
+using MyRedis.Caching.Model;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace MyRedis.Caching.Extensions
+namespace MyRedis.Caching.Extension
 {
     public static class DistributedCacheExtensions
     {
@@ -24,7 +19,7 @@ namespace MyRedis.Caching.Extensions
             options.SlidingExpiration = slidingExpireTime ?? TimeSpan.FromSeconds(60);
 
 
-            if (data is IModel || data is ICollection<T> || data is ICollection)
+            if (data is CachedModel || data is ICollection<T> || data is ICollection)
             {
                 var json = JsonSerializer.Serialize(data);
                 await cache.SetStringAsync(key, json, options);
@@ -42,7 +37,7 @@ namespace MyRedis.Caching.Extensions
         public static async Task<T> GetCacheAsync<T>(this IDistributedCache cache,
                                                        string key) where T : class
         {
-            if (typeof(T).IsAssignableTo(typeof(IModel)) || typeof(T).IsAssignableTo(typeof(IEnumerable)))
+            if (typeof(T).IsAssignableTo(typeof(CachedModel)) || typeof(T).IsAssignableTo(typeof(IEnumerable)))
             {
                 var json = await cache.GetStringAsync(key);
                 if (string.IsNullOrEmpty(json))

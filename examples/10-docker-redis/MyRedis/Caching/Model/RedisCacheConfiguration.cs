@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyRedis.Caching
+namespace MyRedis.Caching.Model
 {
     public class RedisCacheConfiguration
     {
-        public string InstanceName { get; set; }
+        public string Name { get; set; }
         public string Server { get; set; }
         public int Port { get; set; }
 
