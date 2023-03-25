@@ -512,6 +512,17 @@ docker-compose stop
 docker-compose start
 ```
 
+# Miscellaneous
+
+Check docker disk consumtion
+``` bash
+docker system df
+```
+
+Clean up the builder chache
+``` bash
+docker builder prune
+```
 
 # References
 1. https://docs.docker.com/storage/
