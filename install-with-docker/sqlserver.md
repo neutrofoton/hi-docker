@@ -11,4 +11,5 @@
     ```
 
 3. Connect to the database though SSMS.
+
    <img src="../images/ss_sql-server-connect-management-studio.png" alt="drawing"/>
