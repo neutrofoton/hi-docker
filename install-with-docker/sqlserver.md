@@ -1,7 +1,12 @@
+# Docker Basic
 1. Create sql server container
 
-    ```
+    ``` bash
     docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=P@ssw0rd.1" -p 1433:1433 --name sql2022 -d mcr.microsoft.com/mssql/server:2022-latest
+    ```
+
+    ``` bash
+    sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=P@ssw0rd.1" -p 1433:1433 --name sql2022 -v /var/opt/mssql2022/data:/var/opt/mssql/data -v /var/opt/mssql2022/log:/var/opt/mssql/log -v /var/opt/mssql2022/secrets:/var/opt/mssql/secrets -d mcr.microsoft.com/mssql/server:2022-latest
     ```
 
 2. Check the running container
@@ -13,3 +18,20 @@
 3. Connect to the database though SSMS.
 
    <img src="../images/ss_sql-server-connect-management-studio.png" alt="drawing"/>
+
+
+# Docker Compose
+```bash
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secrets
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@ssw0rd.1
+```
