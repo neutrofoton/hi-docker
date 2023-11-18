@@ -13,3 +13,12 @@ docker exec -it nginx-static /bin/bash
 
 ls /usr/share/nginx/html
 ```
+
+### Example hosting web template
+
+In this example I use opensource web template from [Gentelella](https://github.com/ColorlibHQ/gentelella)
+
+
+```bash
+docker container run -d -p 80:80 -v ~/sites/docker/nginx/html/gentelella:/usr/share/nginx/html --hostname gentelella --name gentelella nginx:latest
+```
