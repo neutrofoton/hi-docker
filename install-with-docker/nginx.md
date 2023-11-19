@@ -22,3 +22,7 @@ In this example I use opensource web template from [Gentelella](https://github.c
 ```bash
 docker container run -d -p 80:80 -v ~/sites/docker/nginx/html/gentelella:/usr/share/nginx/html --hostname gentelella --name gentelella nginx:latest
 ```
+
+```bash
+sudo docker container run -d -p 80:80 -v ${PWD}:/usr/share/nginx/html --name gentelella --hostname gentelella nginx:latest
+````
