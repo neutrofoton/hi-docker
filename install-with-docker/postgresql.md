@@ -58,6 +58,7 @@
 
 # Connecting PgAdmin docker to PostgreSQL docker
 If we want to connect pgadmin installed on docker to the postgresql installed on docker on the same host, we need to use container IP instead of localhost when registering postgreSQL server to pgAdmin.
+Since the pgadmin is a web app, thus it will connect through its backend (inside container) instead of from host/localhost. 
 
 ```bash
 sudo docker container inspect {postgresql_container_name_or_ID} | grep IPAddress
