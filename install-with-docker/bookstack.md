@@ -48,3 +48,4 @@ The default username is <code>admin@admin.com</code> with the password of <code>
 
 # References
 - https://hub.docker.com/r/linuxserver/bookstack
+- https://www.youtube.com/watch?v=Mwlu2oCccMU&ab_channel=Steve%27sTechStuff
