@@ -1,6 +1,6 @@
 1. Build docker image
 ```
-cd 04-net-core-in-docker
+cd D-console
 docker image build --rm -t neutrofoton/console-net6:latest .
 ```
 
