@@ -38,6 +38,10 @@ docker system prune
 # -a option to delete only unused images from existing containers.
 docker image prune -a
 
+# remove everything
+docker system prune -a --volumes
+
+
 # Removing all stopped containers
 docker container prune
 
@@ -64,3 +68,30 @@ docker rm $ (docker ps -a -q)
 ```
 
 
+# Move docker storage to home
+> I never tested this steps yet:
+
+1. Stop docker service
+    ```bash
+    sudo systemctl stop docker
+    ```
+
+2. Move docker data
+    ```bash
+    sudo mv /var/lib/docker /home/docker-storage
+    ```
+
+3. Create a symbolic link
+    ```bash
+    sudo ln -s /home/docker-storage /var/lib/docker
+    ```
+
+4. Start docker service
+    ```bash
+    sudo systemctl start docker
+    ```
+
+5. Verify
+    ```bash
+    docker info | grep "Docker Root Dir"
+    ```

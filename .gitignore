@@ -375,3 +375,6 @@ bundles/
 vendor/pkg/
 pyenv
 Vagrantfile
+
+# hi-docker
+notebooks
