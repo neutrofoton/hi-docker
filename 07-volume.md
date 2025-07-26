@@ -41,4 +41,17 @@
 ###  ***tmpfs mounts***
 tmpfs mounts are stored in the host system’s memory only, and are never written to the host system’s filesystem.
 
-  
+  # Deleting Volume by Filter
+  ```bash
+  ╰─ docker volume ls
+DRIVER    VOLUME NAME
+local     minikube
+local     sonarqube-lab_sonarqube_lab_data
+local     sonarqube-lab_sonarqube_lab_extensions
+local     sonarqube-lab_sonarqube_lab_logs
+local     sonarqube-lab_sonarqube_lab_postgresql
+local     sonarqube-lab_sonarqube_lab_postgresql_data
+
+# delete sonarqube-lab_*
+docker volume rm $(docker volume ls -q --filter name=^sonarqube-lab_)
+  ```

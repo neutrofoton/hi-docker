@@ -95,3 +95,8 @@ docker rm $ (docker ps -a -q)
     ```bash
     docker info | grep "Docker Root Dir"
     ```
+
+# Get Docker Object Size
+```bash
+docker system df -v
+```
