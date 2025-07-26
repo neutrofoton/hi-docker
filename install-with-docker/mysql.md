@@ -5,21 +5,21 @@
     ```
 
     To create mysql container with specified password:
-       ```
-       docker container run -d \
-      --name mysql \
-      -p 3306:3306 \
-      -e MYSQL_ROOT_PASSWORD=your_secure_password \
-      mysql
+    ```
+    docker container run -d \
+    --name mysql \
+    -p 3306:3306 \
+    -e MYSQL_ROOT_PASSWORD=your_secure_password \
+    mysql
 
-       # example
-       docker container run -d \
-      --name mysql \
-      -p 3306:3306 \
-      -e MYSQL_ROOT_PASSWORD=root \                
-      mysql
+    # example
+    docker container run -d \
+    --name mysql \
+    -p 3306:3306 \
+    -e MYSQL_ROOT_PASSWORD=root \                
+    mysql
 
-       ```
+    ```
 
 3. Check the generated random root password from container log
     ```
